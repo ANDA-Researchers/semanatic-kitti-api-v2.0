@@ -2333,7 +2333,7 @@ wheels = [
 ]
 
 [[package]]
-name = "semantic-kitti-api"
+name = "semantickitti"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
