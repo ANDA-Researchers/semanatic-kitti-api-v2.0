@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # This file is covered by the LICENSE file in the root of this project.
-# developed by Xieyuanli Chen
 
 import argparse
 import os
 import yaml
-from auxiliary.laserscan import LaserScan, SemLaserScan
-from auxiliary.laserscanvis import LaserScanVis
+from semantickitti.laserscan import LaserScan, SemLaserScan
+from semantickitti.laserscanvis import LaserScanVis
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser("./visualize.py")
@@ -20,7 +19,7 @@ if __name__ == '__main__':
       '--config', '-c',
       type=str,
       required=False,
-      default="config/semantic-kitti-mos.yaml",
+      default="config/semantic-kitti.yaml",
       help='Dataset config file. Defaults to %(default)s',
   )
   parser.add_argument(
@@ -49,11 +48,28 @@ if __name__ == '__main__':
       'Defaults to %(default)s',
   )
   parser.add_argument(
-      '--do_instances', '-di',
+      '--do_instances', '-o',
       dest='do_instances',
       default=False,
+      required=False,
       action='store_true',
       help='Visualize instances too. Defaults to %(default)s',
+  )
+  parser.add_argument(
+      '--ignore_images', '-r',
+      dest='ignore_images',
+      default=False,
+      required=False,
+      action='store_true',
+      help='Visualize range image projections too. Defaults to %(default)s',
+  )
+  parser.add_argument(
+      '--link', '-l',
+      dest='link',
+      default=False,
+      required=False,
+      action='store_true',
+      help='Link viewpoint changes across windows. Defaults to %(default)s',
   )
   parser.add_argument(
       '--offset',
@@ -66,6 +82,7 @@ if __name__ == '__main__':
       '--ignore_safety',
       dest='ignore_safety',
       default=False,
+      required=False,
       action='store_true',
       help='Normally you want the number of labels and ptcls to be the same,'
       ', but if you are not done inferring this is not the case, so this disables'
@@ -91,6 +108,8 @@ if __name__ == '__main__':
   print("Predictions", FLAGS.predictions)
   print("ignore_semantics", FLAGS.ignore_semantics)
   print("do_instances", FLAGS.do_instances)
+  print("ignore_images", FLAGS.ignore_images)
+  print("link", FLAGS.link)
   print("ignore_safety", FLAGS.ignore_safety)
   print("color_learning_map", FLAGS.color_learning_map)
   print("offset", FLAGS.offset)
@@ -112,9 +131,9 @@ if __name__ == '__main__':
   scan_paths = os.path.join(FLAGS.dataset, "sequences",
                             FLAGS.sequence, "velodyne")
   if os.path.isdir(scan_paths):
-    print("Sequence folder exists! Using sequence from %s" % scan_paths)
+    print(f"Sequence folder {scan_paths} exists! Using sequence from {scan_paths}")
   else:
-    print("Sequence folder doesn't exist! Exiting...")
+    print(f"Sequence folder {scan_paths} doesn't exist! Exiting...")
     quit()
 
   # populate the pointclouds
@@ -131,11 +150,11 @@ if __name__ == '__main__':
       label_paths = os.path.join(FLAGS.dataset, "sequences",
                                  FLAGS.sequence, "labels")
     if os.path.isdir(label_paths):
-      print("Labels folder exists! Using labels from %s" % label_paths)
+      print(f"Labels folder {label_paths} exists! Using labels from {label_paths}")
     else:
-      print(label_paths)
-      print("Labels folder doesn't exist! Exiting...")
+      print(f"Labels folder {label_paths} doesn't exist! Exiting...")
       quit()
+
     # populate the pointclouds
     label_names = [os.path.join(dp, f) for dp, dn, fn in os.walk(
         os.path.expanduser(label_paths)) for f in fn]
@@ -160,13 +179,14 @@ if __name__ == '__main__':
   # create a visualizer
   semantics = not FLAGS.ignore_semantics
   instances = FLAGS.do_instances
+  images = not FLAGS.ignore_images
   if not semantics:
     label_names = None
   vis = LaserScanVis(scan=scan,
                      scan_names=scan_names,
                      label_names=label_names,
                      offset=FLAGS.offset,
-                     semantics=semantics, instances=instances and semantics)
+                     semantics=semantics, instances=instances and semantics, images=images, link=FLAGS.link)
 
   # print instructions
   print("To navigate:")

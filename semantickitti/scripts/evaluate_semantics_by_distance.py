@@ -130,11 +130,11 @@ if __name__ == '__main__':
   evaluators = []
   for i in range(len(DISTANCES)):
     if FLAGS.backend == "torch":
-      from auxiliary.torch_ioueval import iouEval
+      from semantickitti.torch_ioueval import iouEval
       evaluators.append(iouEval(nr_classes, ignore))
       evaluators[i].reset()
     elif FLAGS.backend == "numpy":
-      from auxiliary.np_ioueval import iouEval
+      from semantickitti.np_ioueval import iouEval
       evaluators.append(iouEval(nr_classes, ignore))
       evaluators[i].reset()
     else:

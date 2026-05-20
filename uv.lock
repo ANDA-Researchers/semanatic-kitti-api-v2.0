@@ -2335,7 +2335,7 @@ wheels = [
 [[package]]
 name = "semantic-kitti-api"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "glfw" },
     { name = "imgui", extra = ["glfw"] },
@@ -2349,9 +2349,13 @@ dependencies = [
     { name = "pyopengl" },
     { name = "pyqt5" },
     { name = "pyyaml" },
-    { name = "torch" },
     { name = "vispy", version = "0.14.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "vispy", version = "0.16.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+]
+
+[package.optional-dependencies]
+torch = [
+    { name = "torch" },
 ]
 
 [package.metadata]
@@ -2363,9 +2367,10 @@ requires-dist = [
     { name = "pyopengl", specifier = ">=3.1.0" },
     { name = "pyqt5", specifier = ">=5.8.1.1" },
     { name = "pyyaml", specifier = ">=5.1.1" },
-    { name = "torch", specifier = ">=1.1.0,<2.5" },
+    { name = "torch", marker = "extra == 'torch'", specifier = ">=1.1.0,<2.5" },
     { name = "vispy", specifier = ">=0.5.3" },
 ]
+provides-extras = ["torch"]
 
 [[package]]
 name = "six"

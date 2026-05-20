@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # This file is covered by the LICENSE file in the root of this project.
 
-from auxiliary.vispy_manager import VispyManager
+from semantickitti.vispy_manager import VispyManager
 import numpy as np
 
 class LaserScanComp(VispyManager):

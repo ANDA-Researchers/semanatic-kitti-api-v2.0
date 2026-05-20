@@ -4,8 +4,8 @@
 import argparse
 import os
 import yaml
-from auxiliary.laserscan import LaserScan, SemLaserScan
-from auxiliary.laserscancomp import LaserScanComp
+from semantickitti.laserscan import LaserScan, SemLaserScan
+from semantickitti.laserscancomp import LaserScanComp
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser("./compare.py")

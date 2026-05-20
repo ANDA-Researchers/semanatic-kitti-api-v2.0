@@ -9,7 +9,7 @@ import numpy as np
 import time
 import json
 
-from auxiliary.eval_np import PanopticEval
+from semantickitti.eval_np import PanopticEval
 
 # possible splits
 splits = ["train", "valid", "test"]

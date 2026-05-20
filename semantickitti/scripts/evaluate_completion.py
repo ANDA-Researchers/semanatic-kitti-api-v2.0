@@ -126,7 +126,7 @@ if __name__ == "__main__":
   remap_lut[remap_lut == 0] = 255   # map 0 to 'invalid'
   remap_lut[0] = 0  # only 'empty' stays 'empty'.
 
-  from auxiliary.np_ioueval import iouEval
+  from semantickitti.np_ioueval import iouEval
   evaluator = iouEval(n_classes, [])
 
   # get files from ground truth and predictions.

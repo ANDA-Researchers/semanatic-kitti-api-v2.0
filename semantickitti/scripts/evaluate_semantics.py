@@ -124,10 +124,10 @@ if __name__ == '__main__':
 
   # create evaluator
   if FLAGS.backend == "torch":
-    from auxiliary.torch_ioueval import iouEval
+    from semantickitti.torch_ioueval import iouEval
     evaluator = iouEval(nr_classes, ignore)
   elif FLAGS.backend == "numpy":
-    from auxiliary.np_ioueval import iouEval
+    from semantickitti.np_ioueval import iouEval
     evaluator = iouEval(nr_classes, ignore)
   else:
     print("Backend for evaluator should be one of ", str(backends))

@@ -6,7 +6,7 @@ import os
 import yaml
 import numpy as np
 import collections
-from auxiliary.laserscan import SemLaserScan
+from semantickitti.laserscan import SemLaserScan
 
 
 if __name__ == '__main__':

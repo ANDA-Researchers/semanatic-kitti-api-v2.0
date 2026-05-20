@@ -18,8 +18,8 @@ import yaml
 import imgui
 from imgui.integrations.glfw import GlfwRenderer
 
-import auxiliary.glow as glow
-from auxiliary.camera import Camera
+import semantickitti.glow as glow
+from semantickitti.camera import Camera
 
 OpenGL.ERROR_ON_COPY = True
 OpenGL.ERROR_CHECKING = True
