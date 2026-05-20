@@ -7,4 +7,5 @@
 .vscode
 *.cxx
 RangeNet.py
-
+.venv/
+data/
